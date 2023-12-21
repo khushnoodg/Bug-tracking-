@@ -1,0 +1,59 @@
+<div id="<%= dom_id bugz %>">
+
+
+<table border="1">
+        <tr>
+        <th>Project Name</th>
+      </tr>
+  <tr>
+  <% pro=Project.find(bugz.project_id); %>
+  <td><%= pro.name %></td>
+  </tr>
+  </table></td>
+  <p>
+    <strong>Title:</strong>
+    <%= bugz.title %>
+  </p>
+
+  <p>
+    <strong>Deadline:</strong>
+    <%= bugz.deadline %>
+  </p>
+  <p>
+  <strong>Image:</strong>
+  <% if @bugz && @bugz.image.present? %>
+    <%= image_tag @bugz.image %>
+  <% else %>
+    click on show to see image 
+  <% end %>
+</p>
+  <p>
+    <strong>B type:</strong>
+    <%= bugz.b_type %>
+  </p>
+
+  <p>
+    <strong>Status:</strong>
+    <%= bugz.status %>
+  </p>
+
+  <p>
+    <strong>Project:</strong>
+    <%= Project.find(bugz.project_id).name  %>
+  </p>
+  <p>
+    <strong>Bug Creater:</strong>
+    <%= Project.find(bugz.project_id).name  %>
+    <%= current_user.user_type%>
+  </p>
+</div>
+
+
+
+
+
+
+
+
+
+

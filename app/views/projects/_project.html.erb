@@ -1,0 +1,96 @@
+
+<div id="<%= dom_id project %>">
+<table border="1">
+        <tr>
+        <th>NAME</th>
+        <th> Developer/QA </th>
+      </tr>
+  <tr>
+  
+    <td><%= project.name %></td>
+    <td>
+    <table border="1">
+      <tr>
+       
+      </tr>
+      <% project.proj_users.each do |task| %>
+        <tr>
+          <td> <%= User.find(task.user_id).username %>-<%= User.find(task.user_id).user_type %> </td>
+             </td>
+        </tr>
+      <% end %>
+    </table></td>
+  </tr>
+</table><br>
+<h3>::: Their Bugs :::</h3>
+<% project.bugzs.each do |bug| %>
+
+    <p>
+      <strong>Title:</strong>
+      <%= bug.title %>
+    </p>
+
+    <p>
+    <strong>Deadline:</strong>
+    <%= bug.deadline %>
+  </p>
+  <p>
+    <strong>Image:</strong>
+    <% if @bug && @bug.image.present? %>
+    <%= image_tag @bugz.image %>
+  <% else %>
+    click on show to see image 
+  <% end %>
+</p>
+  <p>
+    <strong>B type:</strong>
+    <%= bug.b_type %>
+  </p>
+
+  <p>
+    <strong>Status:</strong>
+    <%= bug.status %>
+  </p>
+
+  <p>
+    <strong>Project:</strong>
+    <%= Project.find(bug.project_id).name  %>
+  </p>
+    
+
+
+    <% end %>
+
+    <% if current_user.user_type=="qa" %>
+
+    <h2>Report Bug:</h2>
+    <%= form_with(model: Bugz.new, url: project_bugzs_path(project), method: :post) do |form| %>
+    
+      <%= form.label :title%>
+      <%= form.text_field :title %>
+
+      <%= form.label :image %>
+      <%= form.file_field :image %>
+
+  
+      <%= form.label :deadline %>
+      <%= form.date_field :deadline %>
+ 
+      <%= form.label :b_type %>
+      <%= form.select :b_type, ['feature', 'bug'] %>
+  
+  
+    
+      <%= form.label :status %>
+      <%= form.select :status, ['new', 'started', 'completed'] %>
+  
+<%= form.hidden_field :project_id, value: project.id %>
+
+
+    <p>
+    <%= form.submit "Create Bug" %>
+  </p>
+    <% end %>
+    <% end %>
+
+</div>

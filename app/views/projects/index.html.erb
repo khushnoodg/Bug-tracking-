@@ -1,0 +1,31 @@
+
+
+<% if user_signed_in? %><%= button_to  'Logout', destroy_user_session_path, method: :delete,class: 'btn' %>
+
+
+<% else %><%= link_to 'Sign up', new_user_registration_path %> <%= link_to 'Login', new_user_session_path %><% end %>
+
+
+<% if current_user.user_type=="manager" %>
+<h2>------------------------------------------------------Welcom Manager-----------------------------------------------  </h2>
+<%else%>
+<h2>------------------------------------------------------Welcom QA-----------------------------------------------  </h2>
+
+<% end%>
+<h1>Projects </h1>
+<% if current_user.user_type=="manager" %>
+<%= link_to "Create New project", new_project_path %><br><br>
+<%end%>
+<div id="projects">
+  <% @projects.each do |project| %>
+    <%= render project %> 
+  
+    <p>
+      <%= link_to "Show this project", project %>
+    </p>
+    <p>___________________________________________________________________________________________</p>
+  <% end %>
+</div>
+
+<!-- app/views/projects/index.html.erb -->
+

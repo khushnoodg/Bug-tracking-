@@ -1,0 +1,26 @@
+<p style="color: green"><%= notice %></p>
+<% if user_signed_in? %><%= button_to  'Logout', destroy_user_session_path, method: :delete,class: 'btn' %>
+
+
+<% else %><%= link_to 'Sign up', new_user_registration_path %> <%= link_to 'Login', new_user_session_path %><% end %>
+
+<h1>Bugzs</h1>
+
+<div id="bugzs">
+  <% @bugzs.each do |bugz| %>
+    <% project=bugz.project %>
+    <% projectuser=project.users %>
+    <% projectuser.each do |us| %>
+    <% if current_user.email==us.email %>
+    <%= render bugz %>
+    <p>
+      <%= link_to "Show this bugz", bugz %>
+    </p>
+    <% break %>
+    <% end %>
+    <% end %> 
+  <% end %>
+</div>
+<% if current_user.user_type=="qa" %>
+<%= link_to "New bugz", new_bugz_path %>
+<%end%>
